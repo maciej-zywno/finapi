@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:flow="http://www.springframework.org/schema/webflow-config" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-lazy-init="false">
+
+	<bean id="warsawTimeZone" class="java.util.TimeZone" factory-method="getTimeZone">
+		<constructor-arg value="${warsawTimeZoneId}" />
+	</bean>
+	<bean id="warsawDateTimeZone" class="org.joda.time.DateTimeZone" factory-method="forID">
+		<constructor-arg value="${warsawTimeZoneId}" />
+	</bean>
+
+	<bean id="yearMonthDayDashDelimitedFormat_WarsawTimeZone" class="java.text.SimpleDateFormat">
+		<constructor-arg value="${yearMonthDayDashDelimitedFormat}" />
+		<property name="timeZone" ref="warsawTimeZone" />
+	</bean>
+	<bean id="yearMonthDayDotDelimitedFormat_WarsawTimeZone" class="java.text.SimpleDateFormat">
+		<constructor-arg value="${yearMonthDayDotDelimitedFormat}" />
+		<property name="timeZone" ref="warsawTimeZone" />
+	</bean>
+	<bean id="paypalRequestDayFormat_WarsawTimeZone" class="java.text.SimpleDateFormat">
+		<constructor-arg value="${paypalRequestDayFormat}" />
+		<property name="timeZone" ref="warsawTimeZone" />
+	</bean>
+	<bean id="paypalReportDateFormat_WarsawTimeZone" class="java.text.SimpleDateFormat">
+		<constructor-arg value="${paypalReportDateFormat}" />
+		<property name="timeZone" ref="warsawTimeZone" />
+	</bean>
+
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:format.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+</beans>
